@@ -13,7 +13,7 @@ import vttp2022.project.model.RaceCourse;
 import static vttp2022.project.repository.Queries.*;
 
 @Repository
-public class TinyWhoopRepository {
+public class TinywhoopRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 

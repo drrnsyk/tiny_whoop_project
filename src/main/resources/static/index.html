@@ -28,7 +28,7 @@
             padding: 20px;
             }
 
-            #myField {
+            .myField {
             width: 350px;
             font-size: 20px;
             font-style: italic;
@@ -39,12 +39,12 @@
             cursor: pointer;
             }
 
-            #myField:hover {
+            .myField:hover {
             background: #ddd;
             color: black;
             }
 
-            #myBtn {
+            .myBtn {
             width: 50px;
             font-size: 20px;
             padding: 10px;
@@ -54,7 +54,7 @@
             cursor: pointer;
             }
 
-            #myBtn:hover {
+            .myBtn:hover {
             background: #ddd;
             color: black;
             }
@@ -71,8 +71,8 @@
         <div class="content">
             <h1>Tiny Whoop League</h1>
             <form method="GET" action="/racecourse">
-                <input id="myField" required type="text" name="userName" placeholder="Enter username to view leaderboard">
-                <button id="myBtn" type="submit">Go!</button>
+                <input class="myField" id="userName" required type="text" name="userName" placeholder="Enter username to view leaderboard">
+                <button class="myBtn" type="submit">Go!</button>
             </form>
         </div>
     </body>

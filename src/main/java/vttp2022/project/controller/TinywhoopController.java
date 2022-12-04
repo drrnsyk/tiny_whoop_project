@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/racecourse")
-public class TinyWhoopController {
+public class TinywhoopController {
 
     @GetMapping
     public String getAllRaceCourses(@RequestParam String userName, Model model) {
