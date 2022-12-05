@@ -13,7 +13,7 @@ import vttp2022.project.model.RaceCourse;
 import vttp2022.project.service.TinywhoopService;
 
 @Controller
-@RequestMapping("/racecourse")
+@RequestMapping("/race-course")
 public class TinywhoopController {
 
     @Autowired
@@ -25,7 +25,7 @@ public class TinywhoopController {
         List<RaceCourse> raceCourses = tinywhoopSvc.getAllRaceCourses();
         model.addAttribute("raceCourses", raceCourses);
         model.addAttribute("userName", userName);
-        return "racecourse";
+        return "race-course";
     }
 
 }
