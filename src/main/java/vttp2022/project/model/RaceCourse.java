@@ -40,9 +40,8 @@ public class RaceCourse {
         rc.setRaceId(rs.getInt("race_id"));
         rc.setRaceName(rs.getString("race_name"));
         rc.setLaps(rs.getInt("laps"));
-        rc.setClosingDate(new DateTime(
-                DateTimeFormat.forPattern("dd/MM/yyyy")
-                        .parseDateTime(rs.getString("closing_date"))));
+        System.out.println(rs.getString("closing_date"));
+        rc.setClosingDate(new DateTime(DateTimeFormat.forPattern("yyyy-mm-dd hh:mm:ss.0").parseDateTime(rs.getString("closing_date"))));
         return rc;        
     }
     
