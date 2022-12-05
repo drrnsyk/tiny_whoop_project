@@ -1,4 +1,4 @@
-package vttp2022.project.tinywhoop;
+package vttp2022.project;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

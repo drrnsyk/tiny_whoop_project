@@ -1,4 +1,4 @@
-package vttp2022.project.tinywhoop;
+package vttp2022.project;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

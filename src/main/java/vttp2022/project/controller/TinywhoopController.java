@@ -12,7 +12,6 @@ public class TinywhoopController {
 
     @GetMapping
     public String getAllRaceCourses(@RequestParam String userName, Model model) {
-        System.out.println(userName);
         model.addAttribute("userName", userName);
         return "racecourse";
     }
