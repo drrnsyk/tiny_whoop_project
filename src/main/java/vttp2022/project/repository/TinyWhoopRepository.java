@@ -27,4 +27,8 @@ public class TinywhoopRepository {
         }
         return raceCourses;
     }
+
+    public boolean insertRaceCourse(RaceCourse rc) {
+        return jdbcTemplate.update(SQL_INSERT_RACE_COURSE, rc.getRaceName(), rc.getLaps()) > 0;
+    }
 }
