@@ -1,5 +1,6 @@
 package vttp2022.project.repository;
 
+import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,6 +30,18 @@ public class TinywhoopRepository {
     }
 
     public boolean insertRaceCourse(RaceCourse rc) {
-        return jdbcTemplate.update(SQL_INSERT_RACE_COURSE, rc.getRaceName(), rc.getLaps()) > 0;
+        return jdbcTemplate.update(SQL_INSERT_RACE_COURSE, rc.getRaceName(), rc.getLaps().toString(), new Timestamp(rc.getClosingDate().toDateTime().getMillis())) > 0;
+        // KeyHolder keyholder = new GeneratedKeyHolder();
+        // try {
+        //     jdbcTemplate.update(conn -> {
+        //         PreparedStatement ps = conn.prepareStatement(SQL_INSERT_RACE_COURSE,
+        //                 Statement.RETURN_GENERATED_KEYS);
+        //         ps.setString(1, rc.getRaceName());
+        //         return ps;
+        //     }, keyholder);
+        // } catch (Exception e) {
+        //     
+        // }
+        // return rc;
     }
 }

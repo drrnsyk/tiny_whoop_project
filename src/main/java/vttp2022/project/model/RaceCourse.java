@@ -40,7 +40,10 @@ public class RaceCourse {
         rc.setRaceId(rs.getInt("race_id"));
         rc.setRaceName(rs.getString("race_name"));
         rc.setLaps(rs.getInt("laps"));
-        rc.setClosingDate(new DateTime(DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.0").parseDateTime(rs.getString("closing_date"))));
+        rc.setClosingDate(new DateTime(DateTimeFormat.forPattern("dd-MM-yyyy").parseDateTime(rs.getString("closing_date"))));
+        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss");
+        // rc.setClosingDate(LocalDateTime.parse(rs.getString("closing_date"), formatter));
+        // rc.setClosingDate(new DateTime(DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.0").parseDateTime(rs.getString("closing_date"))));
         return rc;        
     }
     

@@ -2,6 +2,9 @@ package vttp2022.project.controller;
 
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,6 +48,11 @@ public class TinywhoopController {
         RaceCourse rc = new RaceCourse();
         rc.setRaceName(form.getFirst("race_name"));
         rc.setLaps(Integer.parseInt(form.getFirst("laps")));
+        System.out.println(">>>>" + form.getFirst("closing_date"));
+        rc.setClosingDate(new DateTime(DateTimeFormat.forPattern("yyyy-MM-dd").parseDateTime(form.getFirst("closing_date"))));
+        //rc.setClosingDate(new DateTime(DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm").parseDateTime(form.getFirst("closing_date"))));
+        // html datetime input is as follow 2022-12-16T15:25
+        // SQL to joda pattern is as follow 2022-12-31T12:21:35.000+08:00
         tinywhoopSvc.insertRaceCourse(rc);
         List<RaceCourse> raceCourses = tinywhoopSvc.getAllRaceCourses();
         model.addAttribute("raceCourses", raceCourses);

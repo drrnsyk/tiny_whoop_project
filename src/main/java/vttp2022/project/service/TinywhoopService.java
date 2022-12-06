@@ -23,10 +23,7 @@ public class TinywhoopService {
 
     @Transactional(rollbackFor = DateException.class)
     public void insertRaceCourse(RaceCourse rc) throws DateException {
-
-        // Create the purchaseOrder
         tinywhoopRepo.insertRaceCourse(rc);
-        
         if (rc.getClosingDate().isBefore(DateTime.now()))
             throw new DateException("Closing Date cannot be backdated");
     }
