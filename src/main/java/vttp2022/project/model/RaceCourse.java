@@ -9,6 +9,7 @@ public class RaceCourse {
     private String raceName;
     private Integer laps;
     private DateTime closingDate;
+    private String organizer;
 
     public Integer getRaceId() {
         return raceId;
@@ -34,6 +35,12 @@ public class RaceCourse {
     public void setClosingDate(DateTime closingDate) {
         this.closingDate = closingDate;
     }
+    public String getOrganizer() {
+        return organizer;
+    }
+    public void setOrganizer(String organizer) {
+        this.organizer = organizer;
+    }
 
     public static RaceCourse create(SqlRowSet rs) {
         RaceCourse rc = new RaceCourse();
@@ -44,6 +51,7 @@ public class RaceCourse {
         // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss");
         // rc.setClosingDate(LocalDateTime.parse(rs.getString("closing_date"), formatter));
         // rc.setClosingDate(new DateTime(DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.0").parseDateTime(rs.getString("closing_date"))));
+        rc.setOrganizer(rs.getString("organizer"));
         return rc;        
     }
     

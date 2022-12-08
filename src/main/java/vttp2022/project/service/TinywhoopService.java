@@ -28,4 +28,12 @@ public class TinywhoopService {
             throw new DateException("Closing Date cannot be backdated");
     }
 
+    public RaceCourse getRaceCourseById(String raceId) {
+        return tinywhoopRepo.getRaceCourseByRaceId(raceId);
+    }
+
+    public boolean updateRaceCourseById(RaceCourse rc) {
+        return tinywhoopRepo.updateRaceCourseById(rc);
+    }
+
 }

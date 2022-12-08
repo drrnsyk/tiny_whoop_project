@@ -21,31 +21,34 @@
     </nav>
 
     <body>
-        <div class="container">
-            <form method="POST" action="/race-course">
-              <div class="mb-3 mt-3">
-                <div class="mb-3 mt-3">
-                    <label for="race_name" class="form-label">Race Name:</label>
-                    <input required type="text" class="form-control" id="race_name" placeholder="Enter race name" name="race_name">
-                </div>
-              </div>
-                <div class="mb-3 mt-3">
-                    <label for="laps" class="form-label">No. of Laps:</label>
-                    <select name="laps" id="laps" style="width:100%">
-                    <option value="3">3</option>
-                    <option value="5">5</option>
-                    </select>
-                </div>
-                <div class="mb-3 mt-3">
-                    <label for="closing_date" class="form-label">Closing Date:</label>
-                    <input required type="date" class="form-control" id="closing_date" placeholder="Enter closing date" name="closing_date">
-                </div>
-                <div class="mb-3 mt-3">
-                  <label for="userName" class="form-label">Username:</label>
-                  <input readonly type="text" class="form-control" id="userName" name="userName" data-th-value="${userName}">
-                </div>
-              <button type="submit" class="btn btn-secondary">Add Race</button>
-            </form>
+        <div style="padding-top:50px">
+            <div class="container">
+                <form method="POST" action="/race-course">
+                <H3>Add a Race Course</H3>
+                  <div class="mb-3 mt-3">
+                    <div class="mb-3 mt-3">
+                        <label for="race_name" class="form-label">Race Name:</label>
+                        <input required type="text" class="form-control" id="race_name" placeholder="Enter race name" name="race_name">
+                    </div>
+                  </div>
+                    <div class="mb-3 mt-3">
+                        <label for="laps" class="form-label">No. of Laps:</label>
+                        <select name="laps" id="laps" style="width:100%">
+                        <option value="3">3</option>
+                        <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="closing_date" class="form-label">Closing Date:</label>
+                        <input required type="date" class="form-control" id="closing_date" placeholder="Enter closing date" name="closing_date">
+                    </div>
+                    <div class="mb-3 mt-3">
+                      <label for="organizer" class="form-label">Race Organizer:</label>
+                      <input readonly type="text" class="form-control" id="organizer" name="organizer" data-th-value="${userName}">
+                    </div>
+                  <button type="submit" class="btn btn-secondary">Add Race</button>
+                </form>
+            </div>
         </div>
     </body>
 </html>

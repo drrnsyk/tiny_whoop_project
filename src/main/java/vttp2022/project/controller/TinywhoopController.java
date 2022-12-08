@@ -3,13 +3,13 @@ package vttp2022.project.controller;
 import java.util.List;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,11 +28,10 @@ public class TinywhoopController {
     private TinywhoopService tinywhoopSvc;
 
     @GetMapping
-    public String getAllRaceCourses(@RequestParam String userName, Model model, HttpSession sess) {
+    public String getAllRaceCourses(@RequestParam String userName, Model model) {
         // query the datebase for the list of race courses
         List<RaceCourse> raceCourses = tinywhoopSvc.getAllRaceCourses();
         model.addAttribute("raceCourses", raceCourses);
-        sess.setAttribute("userName", userName);
         return "race-course";
     }
 
@@ -44,7 +43,7 @@ public class TinywhoopController {
     }
     
     @PostMapping
-    public String saveRaceCourse(@RequestBody MultiValueMap<String, String> form, Model model, HttpSession sess) throws DateException {
+    public String saveRaceCourse(@RequestBody MultiValueMap<String, String> form, Model model) throws DateException {
         RaceCourse rc = new RaceCourse();
         rc.setRaceName(form.getFirst("race_name"));
         rc.setLaps(Integer.parseInt(form.getFirst("laps")));
@@ -53,10 +52,32 @@ public class TinywhoopController {
         //rc.setClosingDate(new DateTime(DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm").parseDateTime(form.getFirst("closing_date"))));
         // html datetime input is as follow 2022-12-16T15:25
         // SQL to joda pattern is as follow 2022-12-31T12:21:35.000+08:00
+        rc.setOrganizer(form.getFirst("organizer"));
         tinywhoopSvc.insertRaceCourse(rc);
         List<RaceCourse> raceCourses = tinywhoopSvc.getAllRaceCourses();
         model.addAttribute("raceCourses", raceCourses);
         return "race-course";
+    }
+
+    @GetMapping("/edit/{raceId}")
+    public String editRaceCoursePage(@PathVariable(value="raceId") String raceId, Model model) {
+        RaceCourse rc = tinywhoopSvc.getRaceCourseById(raceId);
+        model.addAttribute("rc", rc);
+        return "edit-race-course";
+    }
+
+    @PostMapping("/editsuccess")
+    public String saveEditRaceCourse(@RequestBody MultiValueMap<String, String> form, Model model, HttpSession sess) {
+        RaceCourse rc = new RaceCourse();
+        rc.setRaceId(Integer.parseInt(form.getFirst("race_id")));
+        rc.setRaceName(form.getFirst("race_name"));
+        rc.setLaps(Integer.parseInt(form.getFirst("laps")));
+        // rc.setClosingDate(new DateTime(DateTimeFormat.forPattern("yyyy-MM-dd").parseDateTime(form.getFirst("closing_date"))));
+        rc.setOrganizer(form.getFirst("organizer"));
+        tinywhoopSvc.updateRaceCourseById(rc);
+        List<RaceCourse> raceCourses = tinywhoopSvc.getAllRaceCourses();
+        model.addAttribute("raceCourses", raceCourses);
+        return "/race-course";
     }
 
 }

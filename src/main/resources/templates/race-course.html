@@ -74,6 +74,7 @@
                             <th scope="col">Race Name</th>
                             <th scope="col">No. of Laps</th>
                             <th scope="col">Closing Date</th>
+                            <th scope="col">Race Organizer</th>
                             <th scope="col">Update</th>
                             <th scope="col">Delete</th>
                             </tr>
@@ -85,9 +86,9 @@
                             <td data-th-text="${r.getRaceName}"></td>
                             <td data-th-text="${r.getLaps}"></td>
                             <td data-th-text="${r.getClosingDate}"></td>
-                            <!-- <td><a data-th-href="@{/view/edit/{id}(id=${p.id})}">Edit</a></td>
-                            <td><a data-th-href="@{/view/delete/{id}(id=${p.id})}">Delete</a></td>
-                            <td><a data-th-href="@{/view/reviews/{establishmentName}(establishmentName=${p.establishmentName})}">Get Reviews</a></td> -->
+                            <td data-th-text="${r.getOrganizer}"></td>
+                            <td><a data-th-href="@{/race-course/edit/{id}(id=${r.raceId})}">Edit</a></td>
+                            <td><a data-th-href="@{/race-course/delete/{id}(id=${r.raceId})}">Delete</a></td>
                             </tr>
                         </tbody>
                     </table>

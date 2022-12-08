@@ -1,5 +1,6 @@
 package vttp2022.project.repository;
 
+import java.io.RandomAccessFile;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,7 +23,6 @@ public class TinywhoopRepository {
         final List<RaceCourse> raceCourses = new LinkedList<>();
         SqlRowSet rs = null;
         rs = jdbcTemplate.queryForRowSet(SQL_SELECT_ALL_RACE_COURSES);
-
         while (rs.next()) {
             raceCourses.add(RaceCourse.create(rs));
         }
@@ -30,7 +30,7 @@ public class TinywhoopRepository {
     }
 
     public boolean insertRaceCourse(RaceCourse rc) {
-        return jdbcTemplate.update(SQL_INSERT_RACE_COURSE, rc.getRaceName(), rc.getLaps().toString(), new Timestamp(rc.getClosingDate().toDateTime().getMillis())) > 0;
+        return jdbcTemplate.update(SQL_INSERT_RACE_COURSE, rc.getRaceName(), rc.getLaps().toString(), new Timestamp(rc.getClosingDate().toDateTime().getMillis()), rc.getOrganizer()) > 0;
         // KeyHolder keyholder = new GeneratedKeyHolder();
         // try {
         //     jdbcTemplate.update(conn -> {
@@ -43,5 +43,20 @@ public class TinywhoopRepository {
         //     
         // }
         // return rc;
+    }
+
+    public RaceCourse getRaceCourseByRaceId(String raceId) {
+        final List<RaceCourse> raceCourses = new LinkedList<>();
+        SqlRowSet rs = null;
+        rs = jdbcTemplate.queryForRowSet(SQL_SELECT_RACE_COURSE_BY_RACEID, raceId);
+        while (rs.next()) {
+            raceCourses.add(RaceCourse.create(rs));
+        }
+        return raceCourses.get(0);
+    }
+
+    public boolean updateRaceCourseById(RaceCourse rc) {
+        // return jdbcTemplate.update(SQL_UPDATE_RACE_COURSE_BY_RACEID, rc.getRaceName(), rc.getLaps(), new Timestamp(rc.getClosingDate().toDateTime().getMillis()), rc.getRaceId()) > 0;
+        return jdbcTemplate.update(SQL_UPDATE_RACE_COURSE_BY_RACEID, rc.getRaceName(), rc.getLaps().toString(), rc.getOrganizer(), rc.getRaceId()) > 0;
     }
 }
