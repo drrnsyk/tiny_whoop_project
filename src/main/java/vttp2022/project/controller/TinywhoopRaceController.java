@@ -22,16 +22,18 @@ import vttp2022.project.service.TinywhoopService;
 
 @Controller
 @RequestMapping("/race-course")
-public class TinywhoopController {
+public class TinywhoopRaceController {
 
     @Autowired
     private TinywhoopService tinywhoopSvc;
 
     @GetMapping
-    public String getAllRaceCourses(@RequestParam String userName, Model model) {
+    public String getAllRaceCourses(@RequestParam String userName, Model model, HttpSession sess) {
         // query the datebase for the list of race courses
         List<RaceCourse> raceCourses = tinywhoopSvc.getAllRaceCourses();
         model.addAttribute("raceCourses", raceCourses);
+        model.addAttribute("userName", userName);
+        sess.setAttribute("userName", userName);
         return "race-course";
     }
 
@@ -43,7 +45,7 @@ public class TinywhoopController {
     }
     
     @PostMapping
-    public String saveRaceCourse(@RequestBody MultiValueMap<String, String> form, Model model) throws DateException {
+    public String saveRaceCourse(@RequestBody MultiValueMap<String, String> form, Model model, HttpSession sess) throws DateException {
         RaceCourse rc = new RaceCourse();
         rc.setRaceName(form.getFirst("race_name"));
         rc.setLaps(Integer.parseInt(form.getFirst("laps")));
@@ -56,13 +58,17 @@ public class TinywhoopController {
         tinywhoopSvc.insertRaceCourse(rc);
         List<RaceCourse> raceCourses = tinywhoopSvc.getAllRaceCourses();
         model.addAttribute("raceCourses", raceCourses);
+        String userName = (String) sess.getAttribute("userName");
+        model.addAttribute("userName", userName);
         return "race-course";
     }
 
     @GetMapping("/edit/{raceId}")
-    public String editRaceCoursePage(@PathVariable(value="raceId") String raceId, Model model) {
+    public String editRaceCoursePage(@PathVariable(value="raceId") String raceId, Model model, HttpSession sess) {
         RaceCourse rc = tinywhoopSvc.getRaceCourseById(raceId);
         model.addAttribute("rc", rc);
+        String userName = (String) sess.getAttribute("userName");
+        model.addAttribute("userName", userName);
         return "edit-race-course";
     }
 
@@ -77,6 +83,8 @@ public class TinywhoopController {
         tinywhoopSvc.updateRaceCourseById(rc);
         List<RaceCourse> raceCourses = tinywhoopSvc.getAllRaceCourses();
         model.addAttribute("raceCourses", raceCourses);
+        String userName = (String) sess.getAttribute("userName");
+        model.addAttribute("userName", userName);
         return "/race-course";
     }
 
@@ -93,6 +101,8 @@ public class TinywhoopController {
         tinywhoopSvc.deleteRaceCourseById(raceId);
         List<RaceCourse> raceCourses = tinywhoopSvc.getAllRaceCourses();
         model.addAttribute("raceCourses", raceCourses);
+        String userName = (String) sess.getAttribute("userName");
+        model.addAttribute("userName", userName);
         return "/race-course";
     }
 
