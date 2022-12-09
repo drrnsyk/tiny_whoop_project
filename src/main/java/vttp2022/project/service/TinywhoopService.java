@@ -36,4 +36,8 @@ public class TinywhoopService {
         return tinywhoopRepo.updateRaceCourseById(rc);
     }
 
+    public boolean deleteRaceCourseById(Integer raceId) {
+        return tinywhoopRepo.deleteRaceCourseById(raceId);
+    }
+
 }

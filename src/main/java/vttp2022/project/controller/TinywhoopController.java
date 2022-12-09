@@ -80,5 +80,21 @@ public class TinywhoopController {
         return "/race-course";
     }
 
+    @GetMapping("/delete/{raceId}")
+    public String deleteRaceCoursePage(@PathVariable(value="raceId") String raceId, Model model) {
+        RaceCourse rc = tinywhoopSvc.getRaceCourseById(raceId);
+        model.addAttribute("rc", rc);
+        return "delete-race-course";
+    }
+
+    @PostMapping("/deletesuccess")
+    public String confirmDeleteRaceCourse(@RequestBody MultiValueMap<String, String> form, Model model, HttpSession sess) {
+        Integer raceId = Integer.parseInt(form.getFirst("race_id"));
+        tinywhoopSvc.deleteRaceCourseById(raceId);
+        List<RaceCourse> raceCourses = tinywhoopSvc.getAllRaceCourses();
+        model.addAttribute("raceCourses", raceCourses);
+        return "/race-course";
+    }
+
 }
 

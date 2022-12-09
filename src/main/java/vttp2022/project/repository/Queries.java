@@ -10,4 +10,7 @@ public class Queries {
     // public static String SQL_UPDATE_RACE_COURSE_BY_RACEID = "UPDATE race_courses SET race_name = ?, laps = ?, closing_date = ? WHERE race_id = ?";
 
     public static String SQL_UPDATE_RACE_COURSE_BY_RACEID = "UPDATE race_courses SET race_name = ?, laps = ?, organizer = ? WHERE race_id = ?";
+
+    public static String SQL_DELETE_RACE_COURSE_BY_RACEID = "DELETE FROM race_courses WHERE race_id = ?";
+    
 }

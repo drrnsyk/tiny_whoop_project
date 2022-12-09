@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>Edit Race Course</title>
+    </head>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">TINY WHOOP LEAGUE</a>
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="/about-us">About Us</a>
+                <a class="nav-item nav-link" href="/races">Races</a>
+                <a class="nav-item nav-link" href="/pilots">Pilots</a>
+            </div>
+        </div>
+    </nav>
+
+    <body>
+        <div style="padding-top:50px">
+            <div class="container">
+                <form method="POST" action="/race-course/deletesuccess">
+                    <H3>Are you sure you want to delete the following:</H3>
+                    <div class="mb-3 mt-3">
+                        <label for="race_id" class="form-label">Race ID:</label>
+                        <input readonly type="text" class="form-control" id="race_id" name="race_id" data-th-value="${raceId}">
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="race_name" class="form-label">Race Name:</label>
+                        <input readonly type="text" class="form-control" id="race_name" placeholder="Enter race name" name="race_name" data-th-value="${rc.getRaceName}">
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="laps" class="form-label">No. of laps:</label>
+                        <input readonly type="text" class="form-control" id="laps" placeholder="Enter laps" name="race_name" data-th-value="${rc.getLaps}">
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="closing_date" class="form-label">Closing Date:</label>
+                        <input readonly type="text" class="form-control" id="closing_date" placeholder="Enter closing date" name="closing_date" data-th-value="${rc.getClosingDate}">
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="organizer" class="form-label">Race Organizer:</label>
+                        <input readonly type="text" class="form-control" id="organizer" name="organizer" data-th-value="${rc.getOrganizer}">
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Yes, Delete!</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
