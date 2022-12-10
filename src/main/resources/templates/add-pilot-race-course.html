@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>Add Pilot to Race Course</title>
+    </head>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">TINY WHOOP LEAGUE</a>
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="/about-us">About Us</a>
+                <a class="nav-item nav-link" data-th-href="@{/race-course(userName=${userName})}">Races</a>
+                <a class="nav-item nav-link" href="/pilots">Pilots</a>
+            </div>
+        </div>
+    </nav>
+
+    <body>
+        <div style="padding-top:50px">
+            <div class="container">
+                <form method="POST" action="/race-course/pilots-updated">
+                <H3>Add a Pilot for <span data-th-text="${rc.getRaceName}"></span> [<span data-th-text="${rc.getRaceId}"></span>]</H3>
+                <div class="mb-3 mt-3">
+                    <div class="mb-3 mt-3">
+                        <label for="race_id" class="form-label">Race ID:</label>
+                        <input readonly type="text" class="form-control" id="race_id" name="race_id" data-th-value="${rc.getRaceId}">
+                    </div>
+                <div class="mb-3 mt-3">
+                    <div class="mb-3 mt-3">
+                        <label for="race_name" class="form-label">Race Name:</label>
+                        <input readonly type="text" class="form-control" id="race_name" name="race_name" data-th-value="${rc.getRaceName}">
+                    </div>  
+                <div class="mb-3 mt-3">
+                    <div class="mb-3 mt-3">
+                        <label for="pilot_name" class="form-label">Pilot Name:</label>
+                        <input required type="text" class="form-control" id="pilot_name" placeholder="Enter pilot name" name="pilot_name">
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="pilot_drone_name" class="form-label">Pilot's Drone Name:</label>
+                        <input required type="text" class="form-control" id="pilot_drone_name" placeholder="Enter pilot's drone name" name="pilot_drone_name">
+                    </div>
+
+                    <div class="mb-3 mt-3">
+                        <div data-th-if="${isThree}">
+                            <label class="form-label">Lap Timings:</label>
+                            <input required type="text" class="form-control" id="lap_one" placeholder="Enter lap 1" name="lap_one">
+                            <input required type="text" class="form-control" id="lap_two" placeholder="Enter lap 2" name="lap_two">
+                            <input required type="text" class="form-control" id="lap_three" placeholder="Enter lap 3" name="lap_three">
+                        </div>
+                        <div data-th-unless="${isThree}">
+                            <label class="form-label">Lap Timings:</label>
+                            <input required type="text" class="form-control" id="lap_one" placeholder="Enter lap 1" name="lap_one">
+                            <input required type="text" class="form-control" id="lap_two" placeholder="Enter lap 2" name="lap_two">
+                            <input required type="text" class="form-control" id="lap_three" placeholder="Enter lap 3" name="lap_three">
+                            <input required type="text" class="form-control" id="lap_four" placeholder="Enter lap 4" name="lap_four">
+                            <input required type="text" class="form-control" id="lap_five" placeholder="Enter lap 5" name="lap_five">
+                        </div>
+                    </div>
+
+                  <button type="submit" class="btn btn-secondary">Add Pilot</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <title>View</title>
+        <title>Race Course Pilots</title>
         <style>
             body {
                 background-image: url('');
@@ -59,9 +59,9 @@
         <div style="padding-top:50px">
             <div class="container table-responsive">
                 <h1>
-                    Race Courses
-                    <a href="/race-course/add-race-course">
-                        <button class="btn">Add a Race Course</button>
+                    Pilots registered for <span data-th-text="${rc.getRaceName}"></span> [<span data-th-text="${rc.getRaceId}"></span>]
+                    <a href="/race-course/pilots/add-pilot-race-course">
+                        <button class="btn">Add a Pilot</button>
                     </a>
                 </h1>
                 <div style="padding:20px">
@@ -69,25 +69,18 @@
                         <thead>
                             <tr>
                             <th scope="col">S/N</th>
-                            <th scope="col">Race ID</th>
-                            <th scope="col">Race Name</th>
-                            <th scope="col">No. of Laps</th>
-                            <th scope="col">Closing Date</th>
-                            <th scope="col">Race Organizer</th>
-                            <th scope="col">Update</th>
-                            <th scope="col">Delete</th>
+                            <th scope="col">Pilot ID</th>
+                            <th scope="col">Pilot Name</th>
+                            <th scope="col">Pilot's Drone Name</th>
+                            <!-- <th scope="col">Personal Best Timing</th> -->
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-th-each="r,iterationStatus: ${raceCourses}">
+                            <tr data-th-each="p,iterationStatus: ${pilots}">
                             <th data-th-text="${iterationStatus.count}"></th>
-                            <td data-th-text="${r.getRaceId}"></td>
-                            <td><a data-th-href="@{/race-course/pilots/{id}(id=${r.raceId})}" data-th-text="${r.getRaceName}"></a></td>
-                            <td data-th-text="${r.getLaps}"></td>
-                            <td data-th-text="${r.getClosingDate}"></td>
-                            <td data-th-text="${r.getOrganizer}"></td>
-                            <td><a data-th-href="@{/race-course/edit/{id}(id=${r.raceId})}">Edit</a></td>
-                            <td><a data-th-href="@{/race-course/delete/{id}(id=${r.raceId})}">Delete</a></td>
+                            <td data-th-text="${p.getPilotId}"></td>
+                            <td data-th-text="${p.getPilotName}"></td>
+                            <td data-th-text="${p.getPilotDroneName}"></td>
                             </tr>
                         </tbody>
                     </table>

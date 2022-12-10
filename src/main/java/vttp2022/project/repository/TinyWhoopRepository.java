@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
+import vttp2022.project.model.Pilot;
 import vttp2022.project.model.RaceCourse;
 
 import static vttp2022.project.repository.Queries.*;
@@ -62,4 +63,30 @@ public class TinywhoopRepository {
     public boolean deleteRaceCourseById(Integer raceId) {
         return jdbcTemplate.update(SQL_DELETE_RACE_COURSE_BY_RACEID, raceId) > 0;
     }
+
+    public List<Pilot> getPilotsByRaceId(String raceId) {
+        final List<Pilot> pilots = new LinkedList<>();
+        SqlRowSet rs = null;
+        rs = jdbcTemplate.queryForRowSet(SQL_SELECT_PILOTS_BY_RACE_ID, raceId);
+        while (rs.next()) {
+            pilots.add(Pilot.create(rs));
+        }
+        return pilots;
+    }
+
+    public boolean insertPilotToPilotsByRaceId(Pilot pilot) {
+        return jdbcTemplate.update(SQL_INSERT_PILOT_TO_PILOTS_BY_RACE_ID, pilot.getPilotId(), pilot.getPilotName(), pilot.getPilotDroneName()) > 0;
+    }
+
+    public boolean insertPilotToLapsByRaceId(List<String> lapTimings, RaceCourse rc, Pilot pilot) {
+        for (int i = 0; i < lapTimings.size(); i++) {
+            if (jdbcTemplate.update(SQL_INSERT_PILOT_TO_LAPS_BY_RACE_ID, i+1, rc.getRaceId(), pilot.getPilotId(), lapTimings.get(i)) > 0) {
+                continue;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

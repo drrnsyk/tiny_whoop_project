@@ -1,5 +1,6 @@
 package vttp2022.project.controller;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import vttp2022.project.exception.DateException;
+import vttp2022.project.model.Pilot;
 import vttp2022.project.model.RaceCourse;
 import vttp2022.project.service.TinywhoopService;
 
@@ -49,7 +51,6 @@ public class TinywhoopRaceController {
         RaceCourse rc = new RaceCourse();
         rc.setRaceName(form.getFirst("race_name"));
         rc.setLaps(Integer.parseInt(form.getFirst("laps")));
-        System.out.println(">>>>" + form.getFirst("closing_date"));
         rc.setClosingDate(new DateTime(DateTimeFormat.forPattern("yyyy-MM-dd").parseDateTime(form.getFirst("closing_date"))));
         //rc.setClosingDate(new DateTime(DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm").parseDateTime(form.getFirst("closing_date"))));
         // html datetime input is as follow 2022-12-16T15:25
@@ -106,5 +107,58 @@ public class TinywhoopRaceController {
         return "/race-course";
     }
 
+    @GetMapping("/pilots/{raceId}")
+    public String viewRaceCourse(@PathVariable(value="raceId") String raceId, Model model, HttpSession sess) {
+        List<Pilot> pilots = tinywhoopSvc.getPilotsByRaceId(raceId);
+        model.addAttribute("pilots", pilots);
+        RaceCourse rc = tinywhoopSvc.getRaceCourseById(raceId);
+        model.addAttribute("rc", rc);
+        sess.setAttribute("rc", rc);
+        String userName = (String) sess.getAttribute("userName");
+        model.addAttribute("userName", userName);
+        return "pilots-race-course";
+    }
+
+    @GetMapping("/pilots/add-pilot-race-course")
+    public String addPilotToRaceCourse(Model model, HttpSession sess) {
+        String userName = (String) sess.getAttribute("userName");
+        model.addAttribute("userName", userName);
+        RaceCourse rc = (RaceCourse) sess.getAttribute("rc");
+        model.addAttribute("rc", rc);
+        boolean isThree = false;
+        if (rc.getLaps() == 3)
+            isThree = true;
+        model.addAttribute("isThree", isThree);
+        return "add-pilot-race-course";
+    }
+
+    @PostMapping("/pilots-updated")
+    public String savePilotToRaceCourse(@RequestBody MultiValueMap<String, String> form, Model model, HttpSession sess) throws DateException {
+        String pilotName = form.getFirst("pilot_name");
+        String pilotDroneName = form.getFirst("pilot_drone_name");
+        RaceCourse rc = (RaceCourse) sess.getAttribute("rc");
+        List<String> lapTimings = new LinkedList<>();
+        if (rc.getLaps() == 3) {
+            lapTimings.add(form.getFirst("lap_one"));
+            lapTimings.add(form.getFirst("lap_two"));
+            lapTimings.add(form.getFirst("lap_three"));
+        } else {
+            lapTimings.add(form.getFirst("lap_one"));
+            lapTimings.add(form.getFirst("lap_two"));
+            lapTimings.add(form.getFirst("lap_three"));
+            lapTimings.add(form.getFirst("lap_four"));
+            lapTimings.add(form.getFirst("lap_five"));
+        }
+        Pilot pilot = new Pilot(pilotName, pilotDroneName, lapTimings);
+        tinywhoopSvc.insertPilotToPilotsByRaceId(pilot);
+        tinywhoopSvc.insertPilotToLapsByRaceId(lapTimings, rc, pilot);
+
+
+        List<RaceCourse> raceCourses = tinywhoopSvc.getAllRaceCourses();
+        model.addAttribute("raceCourses", raceCourses);
+        String userName = (String) sess.getAttribute("userName");
+        model.addAttribute("userName", userName);
+        return "race-course";
+    }
 }
 
