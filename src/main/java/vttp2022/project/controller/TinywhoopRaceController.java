@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import vttp2022.project.exception.DateException;
+import vttp2022.project.model.Lap;
 import vttp2022.project.model.Pilot;
 import vttp2022.project.model.RaceCourse;
 import vttp2022.project.service.TinywhoopService;
@@ -205,7 +206,6 @@ public class TinywhoopRaceController {
         Integer raceId = Integer.parseInt(form.getFirst("race_id"));
         String pilotId = form.getFirst("pilot_id");
         tinywhoopSvc.deletePilotByRaceId(raceId, pilotId);
-
         List<RaceCourse> raceCourses = tinywhoopSvc.getAllRaceCourses();
         model.addAttribute("raceCourses", raceCourses);
         String userName = (String) sess.getAttribute("userName");
@@ -215,6 +215,25 @@ public class TinywhoopRaceController {
         List<Pilot> pilots = tinywhoopSvc.getPilotsByRaceId(raceId.toString());
         model.addAttribute("pilots", pilots);
         return "/pilots-race-course";
+    }
+
+    @GetMapping("/pilots/laps/{pilotId}")
+    public String viewPilotLaps(@PathVariable(value="pilotId") String pilotId, Model model, HttpSession sess) {
+        RaceCourse rc = (RaceCourse) sess.getAttribute("rc");
+        model.addAttribute("rc", rc);
+        Integer raceId = rc.getRaceId();
+        List<Lap> lapTimings = tinywhoopSvc.getPilotLapTiming(raceId, pilotId);
+        model.addAttribute("lapTimings", lapTimings);
+        Pilot pilot = tinywhoopSvc.getPilotByPilotId(pilotId);
+        model.addAttribute("pilot", pilot);
+        String userName = (String) sess.getAttribute("userName");
+        model.addAttribute("userName", userName);
+        Integer totalTime = 0;
+        for (int i = 0; i < lapTimings.size(); i++) {
+            totalTime += lapTimings.get(i).getLapTime();
+        }
+        model.addAttribute("totalTime", totalTime);
+        return "pilots-laps-race-course";
     }
 }
 

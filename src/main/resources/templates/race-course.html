@@ -48,9 +48,8 @@
         <div class="container">
             <a class="navbar-brand" href="/">TINY WHOOP LEAGUE</a>
             <div class="navbar-nav">
-                <a class="nav-item nav-link" href="/about-us">About Us</a>
-                <a class="nav-item nav-link" data-th-href="@{/race-course(userName=${userName})}">Races</a>
-                <a class="nav-item nav-link" href="/pilots">Pilots</a>
+                <a class="nav-item nav-link" data-th-href="@{/race-course(userName=${userName})}">Schedules</a>
+                <a class="nav-item nav-link" href="/">Logout</a>
             </div>
         </div>
     </nav>
@@ -86,8 +85,8 @@
                             <td data-th-text="${r.getLaps}"></td>
                             <td data-th-text="${r.getClosingDate}"></td>
                             <td data-th-text="${r.getOrganizer}"></td>
-                            <td><a data-th-href="@{/race-course/edit/{id}(id=${r.raceId})}">Edit</a></td>
-                            <td><a data-th-href="@{/race-course/delete/{id}(id=${r.raceId})}">Delete</a></td>
+                            <td><a data-th-href="@{/race-course/edit/{id}(id=${r.raceId})}"><button class="btn">Edit</button></a></td>
+                            <td><a data-th-href="@{/race-course/delete/{id}(id=${r.raceId})}"><button class="btn">Delete</button></a></td>
                             </tr>
                         </tbody>
                     </table>

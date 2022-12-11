@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
+import vttp2022.project.model.Lap;
 import vttp2022.project.model.Pilot;
 import vttp2022.project.model.RaceCourse;
 
@@ -105,5 +106,15 @@ public class TinywhoopRepository {
 
     public boolean deletePilotByRaceId(Integer raceId, String pilotId) {
         return jdbcTemplate.update(SQL_DELETE_PILOT_BY_RACE_ID, raceId, pilotId) > 0;
+    }
+
+    public List<Lap> getPilotLapTiming(Integer raceId, String pilotId) {
+        final List<Lap> lapTimings = new LinkedList<>();
+        SqlRowSet rs = null;
+        rs = jdbcTemplate.queryForRowSet(SQL_SELECT_PILOT_LAP_TIMINGS, raceId, pilotId);
+        while (rs.next()) {
+            lapTimings.add(Lap.create(rs));
+        }
+        return lapTimings;
     }
 }

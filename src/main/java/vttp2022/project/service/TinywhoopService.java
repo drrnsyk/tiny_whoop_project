@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import vttp2022.project.exception.DateException;
+import vttp2022.project.model.Lap;
 import vttp2022.project.model.Pilot;
 import vttp2022.project.model.RaceCourse;
 import vttp2022.project.repository.TinywhoopRepository;
@@ -63,6 +64,10 @@ public class TinywhoopService {
 
     public boolean deletePilotByRaceId(Integer raceId, String pilotId) {
         return tinywhoopRepo.deletePilotByRaceId(raceId, pilotId);
+    }
+
+    public List<Lap> getPilotLapTiming(Integer raceId, String pilotId) {
+        return tinywhoopRepo.getPilotLapTiming(raceId, pilotId);
     }
 
 }
