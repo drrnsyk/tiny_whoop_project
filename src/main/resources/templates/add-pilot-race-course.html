@@ -25,17 +25,14 @@
             <div class="container">
                 <form method="POST" action="/race-course/pilots-updated">
                 <H3>Add a Pilot for <span data-th-text="${rc.getRaceName}"></span> [<span data-th-text="${rc.getRaceId}"></span>]</H3>
-                <div class="mb-3 mt-3">
                     <div class="mb-3 mt-3">
                         <label for="race_id" class="form-label">Race ID:</label>
                         <input readonly type="text" class="form-control" id="race_id" name="race_id" data-th-value="${rc.getRaceId}">
                     </div>
-                <div class="mb-3 mt-3">
                     <div class="mb-3 mt-3">
                         <label for="race_name" class="form-label">Race Name:</label>
                         <input readonly type="text" class="form-control" id="race_name" name="race_name" data-th-value="${rc.getRaceName}">
                     </div>  
-                <div class="mb-3 mt-3">
                     <div class="mb-3 mt-3">
                         <label for="pilot_name" class="form-label">Pilot Name:</label>
                         <input required type="text" class="form-control" id="pilot_name" placeholder="Enter pilot name" name="pilot_name">

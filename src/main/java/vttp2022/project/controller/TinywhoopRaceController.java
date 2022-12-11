@@ -152,13 +152,69 @@ public class TinywhoopRaceController {
         Pilot pilot = new Pilot(pilotName, pilotDroneName, lapTimings);
         tinywhoopSvc.insertPilotToPilotsByRaceId(pilot);
         tinywhoopSvc.insertPilotToLapsByRaceId(lapTimings, rc, pilot);
+        List<RaceCourse> raceCourses = tinywhoopSvc.getAllRaceCourses();
+        model.addAttribute("raceCourses", raceCourses);
+        String userName = (String) sess.getAttribute("userName");
+        model.addAttribute("userName", userName);
+        model.addAttribute("rc", rc);
+        Integer raceId = rc.getRaceId();
+        List<Pilot> pilots = tinywhoopSvc.getPilotsByRaceId(raceId.toString());
+        model.addAttribute("pilots", pilots);
+        return "/pilots-race-course";
+    }
 
+    @GetMapping("/pilot/edit/{pilotId}")
+    public String editPilotPage(@PathVariable(value="pilotId") String pilotId, Model model, HttpSession sess) {
+        Pilot pilot = tinywhoopSvc.getPilotByPilotId(pilotId);
+        model.addAttribute("pilot", pilot);
+        String userName = (String) sess.getAttribute("userName");
+        model.addAttribute("userName", userName);
+        return "edit-pilot-race-course";
+    }
+
+    @PostMapping("/pilot/editsuccess")
+    public String saveEditPilot(@RequestBody MultiValueMap<String, String> form, Model model, HttpSession sess) {
+        Pilot pilot = new Pilot();
+        pilot.setPilotId(form.getFirst("pilot_id"));
+        pilot.setPilotName(form.getFirst("pilot_name"));
+        pilot.setPilotDroneName(form.getFirst("pilot_drone_name"));
+        tinywhoopSvc.updatePilotById(pilot);
+        List<RaceCourse> raceCourses = tinywhoopSvc.getAllRaceCourses();
+        model.addAttribute("raceCourses", raceCourses);
+        String userName = (String) sess.getAttribute("userName");
+        model.addAttribute("userName", userName);
+        RaceCourse rc = (RaceCourse) sess.getAttribute("rc");
+        model.addAttribute("rc", rc);
+        Integer raceId = rc.getRaceId();
+        List<Pilot> pilots = tinywhoopSvc.getPilotsByRaceId(raceId.toString());
+        model.addAttribute("pilots", pilots);
+        return "/pilots-race-course";
+    }
+
+    @GetMapping("/pilot/delete/{pilotId}")
+    public String deletePilotPage(@PathVariable(value="pilotId") String pilotId, Model model, HttpSession sess) {
+        RaceCourse rc = (RaceCourse) sess.getAttribute("rc");
+        model.addAttribute("rc", rc);
+        Pilot pilot = tinywhoopSvc.getPilotByPilotId(pilotId);
+        model.addAttribute("pilot", pilot);
+        return "delete-pilot-race-course";
+    }
+
+    @PostMapping("/pilot/deletesuccess")
+    public String confirmDeletePilot(@RequestBody MultiValueMap<String, String> form, Model model, HttpSession sess) {
+        Integer raceId = Integer.parseInt(form.getFirst("race_id"));
+        String pilotId = form.getFirst("pilot_id");
+        tinywhoopSvc.deletePilotByRaceId(raceId, pilotId);
 
         List<RaceCourse> raceCourses = tinywhoopSvc.getAllRaceCourses();
         model.addAttribute("raceCourses", raceCourses);
         String userName = (String) sess.getAttribute("userName");
         model.addAttribute("userName", userName);
-        return "race-course";
+        RaceCourse rc = (RaceCourse) sess.getAttribute("rc");
+        model.addAttribute("rc", rc);
+        List<Pilot> pilots = tinywhoopSvc.getPilotsByRaceId(raceId.toString());
+        model.addAttribute("pilots", pilots);
+        return "/pilots-race-course";
     }
 }
 

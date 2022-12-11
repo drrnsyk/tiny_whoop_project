@@ -53,4 +53,16 @@ public class TinywhoopService {
         return tinywhoopRepo.insertPilotToLapsByRaceId(lapTimings, rc, pilot);    
     }
 
+    public Pilot getPilotByPilotId(String pilotId) {
+        return tinywhoopRepo.getPilotByPilotId(pilotId);
+    }
+
+    public boolean updatePilotById(Pilot pilot) {
+        return tinywhoopRepo.updatePilotById(pilot);
+    }
+
+    public boolean deletePilotByRaceId(Integer raceId, String pilotId) {
+        return tinywhoopRepo.deletePilotByRaceId(raceId, pilotId);
+    }
+
 }

@@ -89,4 +89,21 @@ public class TinywhoopRepository {
         return true;
     }
 
+    public Pilot getPilotByPilotId(String pilotId) {
+        final List<Pilot> pilots = new LinkedList<>();
+        SqlRowSet rs = null;
+        rs = jdbcTemplate.queryForRowSet(SQL_SELECT_PILOT_BY_PILOT_ID, pilotId);
+        while (rs.next()) {
+            pilots.add(Pilot.create(rs));
+        }
+        return pilots.get(0);
+    }
+
+    public boolean updatePilotById(Pilot pilot) {
+        return jdbcTemplate.update(SQL_UPDATE_PILOT_BY_PILOT_ID, pilot.getPilotName(), pilot.getPilotDroneName(), pilot.getPilotId()) > 0;
+    }
+
+    public boolean deletePilotByRaceId(Integer raceId, String pilotId) {
+        return jdbcTemplate.update(SQL_DELETE_PILOT_BY_RACE_ID, raceId, pilotId) > 0;
+    }
 }

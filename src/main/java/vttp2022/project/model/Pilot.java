@@ -10,6 +10,7 @@ public class Pilot {
     private String pilotName;
     private String pilotDroneName;
     private List<String> lapTimings;
+    private Integer totalLapTime;
 
     public Pilot(String pilotName, String pilotDroneName, List<String> lapTimings) {
         this.pilotId = UUID.randomUUID().toString().substring(0, 8);
@@ -44,6 +45,12 @@ public class Pilot {
     }
     public void setLaptimings(List<String> lapTimings) {
         this.lapTimings = lapTimings;
+    }
+    public Integer getTotalLapTime() {
+        return totalLapTime;
+    }
+    public void setTotalLapTime(Integer totalLapTime) {
+        this.totalLapTime = totalLapTime;
     }
 
     public static Pilot create(SqlRowSet rs) {

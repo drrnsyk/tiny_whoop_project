@@ -73,6 +73,8 @@
                             <th scope="col">Pilot Name</th>
                             <th scope="col">Pilot's Drone Name</th>
                             <!-- <th scope="col">Personal Best Timing</th> -->
+                            <th scope="col">Update</th>
+                            <th scope="col">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -81,6 +83,9 @@
                             <td data-th-text="${p.getPilotId}"></td>
                             <td data-th-text="${p.getPilotName}"></td>
                             <td data-th-text="${p.getPilotDroneName}"></td>
+                            <!-- <td data-th-text="${p.getTotalLapTime}"></td> -->
+                            <td><a data-th-href="@{/race-course/pilot/edit/{id}(id=${p.pilotId})}">Edit</a></td>
+                            <td><a data-th-href="@{/race-course/pilot/delete/{id}(id=${p.pilotId})}">Delete</a></td>
                             </tr>
                         </tbody>
                     </table>

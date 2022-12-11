@@ -18,4 +18,10 @@ public class Queries {
     public static String SQL_INSERT_PILOT_TO_PILOTS_BY_RACE_ID = "INSERT INTO pilots(pilot_id, pilot_name, pilot_drone_name) VALUES (?, ?, ?)";
 
     public static String SQL_INSERT_PILOT_TO_LAPS_BY_RACE_ID = "INSERT INTO laps(lap_number, race_id, pilot_id, lap_time) VALUES (?, ?, ?, ?)";
+
+    public static final String SQL_SELECT_PILOT_BY_PILOT_ID = "SELECT pilot_id, pilot_name, pilot_drone_name FROM pilots WHERE pilot_id = ?";
+
+    public static String SQL_UPDATE_PILOT_BY_PILOT_ID = "UPDATE pilots SET pilot_name = ?, pilot_drone_name = ? WHERE pilot_id = ?";
+
+    public static String SQL_DELETE_PILOT_BY_RACE_ID = "DELETE FROM laps WHERE race_id = ? AND pilot_id = ?";
 }
